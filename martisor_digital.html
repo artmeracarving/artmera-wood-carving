@@ -2,161 +2,110 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtMera - Generator Mărțișor Digital</title>
+    <title>ArtMera - Generator Mărțișor</title>
     <style>
-        :root { --wood: #e8d4b9; --wood-dark: #5d4037; --red: #d32f2f; }
-        body { font-family: 'Georgia', serif; background: #f4f1ea; display: flex; justify-content: center; padding: 20px; }
-        .container { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 650px; width: 100%; border: 1px solid #ddd; text-align: center; }
-        .lang-picker { margin-bottom: 20px; }
-        .lang-btn { padding: 8px 18px; cursor: pointer; border: 1px solid var(--wood-dark); background: none; border-radius: 6px; margin: 0 5px; transition: 0.3s; }
-        .lang-btn.active { background: var(--wood-dark); color: white; }
-        .section { margin-bottom: 20px; text-align: left; }
-        label { display: block; font-weight: bold; margin-bottom: 8px; color: var(--wood-dark); }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
-        textarea { height: 80px; resize: none; }
-        .btn-gen { background: var(--red); color: white; border: none; width: 100%; padding: 18px; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        #canvas-container { margin-top: 25px; }
-        canvas { max-width: 100%; height: auto; border: 10px solid white; box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-radius: 4px; display: none; }
-        .btn-down { background: #4caf50; color: white; border: none; padding: 12px 25px; margin-top: 15px; cursor: pointer; border-radius: 6px; display: none; font-weight: bold; }
+        body { font-family: sans-serif; background: #efebe9; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .controls { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 400px; margin-bottom: 20px; }
+        canvas { border: 5px solid #5d4037; border-radius: 15px; max-width: 100%; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .btn { background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+        select, input, textarea { width: 100%; margin: 10px 0; padding: 8px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="lang-picker">
-        <button class="lang-btn active" onclick="setLang('ro')">Română</button>
-        <button class="lang-btn" onclick="setLang('en')">English</button>
-        <button class="lang-btn" onclick="setLang('es')">Español</button>
-    </div>
-
-    <div class="section">
-        <label id="l-photo">Încarcă poza ta (Upload Your Photo):</label>
-        <input type="file" id="photoInput" accept="image/*">
-    </div>
-
-    <div class="section">
-        <label id="l-msg">Mesaj de primăvară:</label>
-        <select id="msgSelect" onchange="document.getElementById('customMsg').value = this.value">
-        </select>
-        <textarea id="customMsg" style="margin-top:10px;"></textarea>
-    </div>
-
-    <button class="btn-gen" id="btn-gen" onclick="draw()">GENEREAZĂ MĂRȚIȘOR</button>
-
-    <div id="canvas-container">
-        <canvas id="c" width="800" height="800"></canvas>
-        <br>
-        <button class="btn-down" id="btn-down" onclick="download()">DESCARCĂ MĂRȚIȘORUL</button>
-    </div>
+<div class="controls">
+    <h3>Personalizează Mărțișorul</h3>
+    <input type="file" id="upload" accept="image/*">
+    <select id="langSelect">
+        <option value="ro">Română</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+    </select>
+    <textarea id="messageText">O primăvară plină de bucurii!</textarea>
+    <button class="btn" onclick="draw()">Generează Mărțișor</button>
+    <button class="btn" style="background: #4caf50;" onclick="download()">Descarcă Imaginea</button>
 </div>
 
-<script>
-const data = {
-    ro: { photo: "Încarcă poza ta:", msg: "Alege mesajul:", btn: "GENEREAZĂ MĂRȚIȘOR", down: "DESCARCĂ MĂRȚIȘORUL", msgs: ["O primăvară plină de bucurii!", "Să-ți fie sufletul plin de lumină!", "Un gând bun de Mărțișor!"] },
-    en: { photo: "Upload your photo:", msg: "Choose message:", btn: "GENERATE MĂRȚIȘOR", down: "DOWNLOAD MĂRȚIȘOR", msgs: ["Happy Spring filled with joy!", "May your spirit bloom bright!", "A Mărțișor with a warm wish!"] },
-    es: { photo: "Sube tu foto:", msg: "Elige mensaje:", btn: "GENERAR MĂRȚIȘOR", down: "DESCARGAR MĂRȚIȘOR", msgs: ["¡Feliz primavera!", "¡Que tu alma florezca!", "¡Un Mărțișor con cariño!"] }
-};
+<canvas id="martisorCanvas" width="800" height="800"></canvas>
 
-let currentLang = 'ro';
-function setLang(l) {
-    currentLang = l;
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById('l-photo').innerText = data[l].photo;
-    document.getElementById('l-msg').innerText = data[l].msg;
-    document.getElementById('btn-gen').innerText = data[l].btn;
-    document.getElementById('btn-down').innerText = data[l].down;
-    const s = document.getElementById('msgSelect'); s.innerHTML = '';
-    data[l].msgs.forEach(m => { let o = document.createElement('option'); o.value = m; o.text = m; s.add(o); });
-    document.getElementById('customMsg').value = data[l].msgs[0];
-}
-setLang('ro');
+<script>
+const canvas = document.getElementById('martisorCanvas');
+const ctx = canvas.getContext('2d');
+
+// Încărcăm resursele (Înlocuiește URL-urile cu fișierele tale locale)
+const bgWood = new Image();
+bgWood.src = 'fundal_tei_gravat.jpg'; // Imaginea cu textura și hornarii gravate
 
 function draw() {
-    const canvas = document.getElementById('c');
-    const ctx = canvas.getContext('2d');
-    const file = document.getElementById('photoInput').files[0];
-    if (!file) { alert("Te rugăm să încarci o poză!"); return; }
-
     const reader = new FileReader();
-    reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-            // 1. Fundal Lemn Tei Gravat
-            ctx.fillStyle = "#e8d4b9";
-            ctx.fillRect(0, 0, 800, 800);
-            
-            // Fibrele lemnului
-            ctx.strokeStyle = "rgba(139, 69, 19, 0.08)";
-            ctx.lineWidth = 1;
-            for(let i=0; i<800; i+=3) {
-                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(800, i + (Math.random()*10 - 5)); ctx.stroke();
-            }
+    const file = document.getElementById('upload').files[0];
 
-            // 2. Gravură adâncă: Flori de măr (Sus) și Hornari (Lateral)
-            ctx.shadowColor = "rgba(0,0,0,0.4)"; ctx.shadowBlur = 3; ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 2;
-            ctx.fillStyle = "rgba(93, 64, 55, 0.7)";
-            ctx.font = "bold 25px Arial"; ctx.textAlign = "center";
-            ctx.fillText("✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿ ✿", 400, 50);
-            
-            // Hornari gravati (Simbol scara si perie)
-            ctx.font = "60px Serif";
-            ctx.fillText("🪜🧹", 120, 420); 
-            ctx.fillText("🧹🪜", 680, 420);
+    if (!file) {
+        alert("Te rugăm să încarci o poză mai întâi!");
+        return;
+    }
 
-            // 3. Ghiocei plantați în pământ (Jos)
-            ctx.shadowBlur = 0; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
-            for(let j=0; j<9; j++) {
-                let x = 80 + (j*80);
-                // Tulpina
-                ctx.strokeStyle = "#4a7c44"; ctx.lineWidth = 3;
-                ctx.beginPath(); ctx.moveTo(x, 780); ctx.quadraticCurveTo(x-15, 720, x, 680); ctx.stroke();
-                // Floarea
-                ctx.fillStyle = "white"; ctx.beginPath(); ctx.arc(x, 680, 10, 0, Math.PI*2); ctx.fill();
-                ctx.strokeStyle = "#ccc"; ctx.lineWidth = 1; ctx.stroke();
-            }
+    reader.onload = function(event) {
+        const userImg = new Image();
+        userImg.onload = function() {
+            // 1. Desenăm fundalul de lemn gravat
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(bgWood, 0, 0, 800, 800);
 
-            // 4. Poza în cercul Mărțișor
+            // 2. Desenăm cercul pentru poză
+            const centerX = 400;
+            const centerY = 350;
+            const radius = 180;
+
             ctx.save();
-            ctx.beginPath(); ctx.arc(400, 380, 200, 0, Math.PI*2); ctx.clip();
-            ctx.drawImage(img, 200, 180, 400, 400);
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.clip(); // Tăiem tot ce iese din cerc
+
+            // Calculăm aspect ratio pentru poza utilizatorului
+            const aspect = userImg.width / userImg.height;
+            let drawW, drawH;
+            if (aspect > 1) {
+                drawH = radius * 2;
+                drawW = drawH * aspect;
+            } else {
+                drawW = radius * 2;
+                drawH = drawW / aspect;
+            }
+            
+            ctx.drawImage(userImg, centerX - drawW/2, centerY - drawH/2, drawW, drawH);
             ctx.restore();
 
-            // Bordura cercului (Fir Alb-Roșu)
-            ctx.lineWidth = 18;
-            ctx.setLineDash([25, 25]);
-            ctx.strokeStyle = "#d32f2f"; ctx.beginPath(); ctx.arc(400, 380, 209, 0, Math.PI*2); ctx.stroke();
-            ctx.strokeStyle = "white"; ctx.lineDashOffset = 25; ctx.beginPath(); ctx.arc(400, 380, 209, 0, Math.PI*2); ctx.stroke();
-            ctx.setLineDash([]);
+            // 3. Desenăm bordura Mărțișor (firul alb-roșu)
+            ctx.lineWidth = 15;
+            ctx.setLineDash([20, 20]); // Efect de fir împletit
+            ctx.strokeStyle = "#d32f2f"; // Roșu
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius + 7, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            ctx.strokeStyle = "#ffffff"; // Alb
+            ctx.lineDashOffset = 20;
+            ctx.stroke();
+            ctx.setLineDash([]); // Resetăm dash-ul
 
-            // 5. Fundița Mărțișor (lângă cerc)
-            const fx = 180, fy = 200;
-            ctx.strokeStyle = "#d32f2f"; ctx.lineWidth = 6;
-            ctx.beginPath(); ctx.arc(fx, fy, 25, 0, Math.PI*2); ctx.stroke(); // bucla stanga
-            ctx.beginPath(); ctx.arc(fx+50, fy, 25, 0, Math.PI*2); ctx.stroke(); // bucla dreapta
-            ctx.strokeStyle = "white"; ctx.setLineDash([5, 5]);
-            ctx.beginPath(); ctx.arc(fx, fy, 25, 0, Math.PI*2); ctx.stroke();
-            ctx.beginPath(); ctx.arc(fx+50, fy, 25, 0, Math.PI*2); ctx.stroke();
-            ctx.setLineDash([]);
-
-            // 6. Mesaj gravat
-            ctx.shadowColor = "rgba(0,0,0,0.2)"; ctx.shadowBlur = 2; ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
-            ctx.fillStyle = "#5d4037"; ctx.font = "italic bold 32px 'Georgia'"; ctx.textAlign = "center";
-            ctx.fillText(document.getElementById('customMsg').value, 400, 640);
-
-            canvas.style.display = 'inline-block';
-            document.getElementById('btn-down').style.display = 'inline-block';
-        }
-        img.src = e.target.result;
-    }
+            // 4. Adăugăm Mesajul de primăvară (jos)
+            ctx.fillStyle = "#4e342e";
+            ctx.font = "italic bold 35px 'Georgia'";
+            ctx.textAlign = "center";
+            const text = document.getElementById('messageText').value;
+            ctx.fillText(text, 400, 720);
+        };
+        userImg.src = event.target.result;
+    };
     reader.readAsDataURL(file);
 }
 
 function download() {
     const link = document.createElement('a');
     link.download = 'martisor-artmera.png';
-    link.href = document.getElementById('c').toDataURL();
+    link.href = canvas.toDataURL();
     link.click();
 }
 </script>
