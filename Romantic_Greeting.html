@@ -3,495 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-																																									
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <title>Our Romantic Greeting Card ❤️</title>
-	 <style>
-             :root {
+    <style>
+        :root {
             --bg-dark: #1E1E1E;
             --burgundy: #7a1f2a;
             --gold: #d4af37;
             --text-light: #EAEAEA;
             --accent: #4A90E2;
-            --border: #333333;       /* borduri */
+            --border: #333333;
         }
 
+        body {
+            background: var(--bg-dark);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+            color: var(--text-light);
+        }
 
-body {
-    background: var(--bg-dark);
-    font-family: 'Montserrat', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-    margin: 0;
-    color: var(--text-light);
-}
+        #site-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 10px 0;
+        }
 
-/* Titlu */
-h1 {
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-}
-        
-/* Secțiunea de titlu + reclamă */
-#site-header {
-    text-align: center;
-    margin-bottom: 25px;
-    padding: 10px 0;
-}
+        #site-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
 
-#site-header h1 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-}
+        .promo-text {
+            font-size: 1rem;
+            color: var(--text-light);
+            opacity: 0.85;
+            margin-bottom: 6px;
+        }
 
-/* Text promo elegant */
-.promo-text {
-    font-size: 1rem;
-    color: var(--text-light);
-    opacity: 0.85;
-    margin-bottom: 6px;
-}
+        .promo-link {
+            display: inline-block;
+            margin-top: 4px;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
 
-/* Link promo */
-.promo-link {
-    display: inline-block;
-    margin-top: 4px;
-    color: var(--accent);
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.2s ease;
-}
+        .config-panel {
+            background: #222;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            margin-bottom: 40px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid var(--border);
+        }
 
-.promo-link:hover {
-    text-decoration: underline;
-    opacity: 0.9;
-}
+        .input-group {
+            margin-bottom: 15px;
+        }
 
+        .input-group label {
+            font-weight: 600;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 6px;
+        }
 
-/* Panou configurare */
-.config-panel {
-    background: #222;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-    margin-bottom: 40px;
-    max-width: 500px;
-    width: 100%;
-    border: 1px solid var(--border);
-}
+        input[type="text"], 
+        input[type="file"], 
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #111;
+            color: var(--text-light);
+            box-sizing: border-box;
+        }
 
+        #printable-card {
+            width: 380px;
+            min-height: 420px;
+            height: auto;
+            background: #111;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 4px solid var(--accent);
+            position: relative;
+            transition: 0.3s ease;
+        }
 
-.input-group label {
-    font-weight: 600;
-    color: var(--accent);
-    display: block; 
-    margin-bottom: 6px;
-}
+        #printable-card.theme-romantic {
+            --card-bg: #ffe6ea;
+            --card-text: #7a1f2a;
+            --card-accent: #ff4d6d;
+            background: var(--card-bg);
+            color: var(--card-text);
+            border-color: var(--card-accent);
+        }
 
-input[type="text"], input[type="file"] {
-    width: 90%;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: #111;
-    color: var(--text-light);
-}
+        #printable-card.theme-cute {
+            --card-bg: #fff4fb;
+            --card-text: #ff69b4;
+            --card-accent: #ff9ad5;
+            background: var(--card-bg);
+            color: var(--card-text);
+            border-color: var(--card-accent);
+        }
 
-select {
-    width: 90%;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: #111 !important;
-    color: var(--text-light) !important;
-    cursor: pointer;
-    appearance: none;
-}
+        #printable-card.theme-elegant {
+            --card-bg: #f7f3e9;
+            --card-text: #5a4634;
+            --card-accent: #c6a667;
+            background: var(--card-bg);
+            color: var(--card-text);
+            border-color: var(--card-accent);
+        }
 
-select option { 
-    background: #111; 
-    color: var(--text-light); 
-}
+        .photo-container {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            height: 220px;
+            margin-top: 20px;
+        }
 
+        .photo-box {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1f1f1f;
+            border: 2px solid var(--border);
+        }
 
-/* Wrapper pentru icon + select */
-.select-wrapper {
-    position: relative;
-    width: 90%;
-    background: transparent;
-    margin-bottom: 20px;
-}
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
 
-/* Icon inimă ❤️ */
-.select-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-    pointer-events: none;
-    color: var(--accent);
-}
+        #card-text {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.4;
+        }
 
-/* Select modern */
-#auto-messages {
-    width: 100%;
-    padding: 12px 14px 12px 42px; /* spațiu pentru icon */
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: linear-gradient(135deg, #111, #1b1b1b);
-    color: var(--text-light);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.25s ease;
-    appearance: none;
-}
+        .btn-group {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
 
-/* Hover */
-#auto-messages:hover {
-    border-color: var(--accent);
-   
-    background: #111 !important; 
-    color: var(--text-light) !important;
-}
+        .btn-action {
+            padding: 14px 25px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+        }
 
-/* Focus */
-#auto-messages:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 10px rgba(74,144,226,0.5);
-}
+        .btn-save { background: #28a745; color: white; }
+        .btn-print { background: var(--accent); color: white; }
 
-#auto-messages option { 
-    background: #111; 
-    color: var(--text-light); 
-}
-
-
-/* Felicitare */
-#printable-card {
-    width: 380px;
-    min-height: 420px; /* suficient pentru poze + text scurt */ 
-    height: auto; /* se mărește singur */
-    background: #111;
-    border-radius: 18px;
-    padding: 25px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 2px solid var(--accent);
-    position: relative;
-    font-size: 1.1rem;
-    line-height: 1.35;
-    background: var(--bg, #111); 
-    color: var(--text, var(--text-light)); 
-    border-color: var(--accent);
-}
-
-#printable-card.theme-romantic {
-    --bg: #ffe6ea;
-    --text: #7a1f2a;
-    --accent: #ff4d6d;
-}
-
-#printable-card.theme-cute {
-    --bg: #fff4fb;
-    --text: #ff69b4;
-    --accent: #ff9ad5;
-}
-
-#printable-card.theme-elegant {
-    --bg: #f7f3e9;
-    --text: #5a4634;
-    --accent: #c6a667;
-}
-
-
-/* Poze */
-.photo-container {
-    display: flex;
-    gap: 15px;
-    width: 100%;
-    height: 220px;
-    margin-top: 20px;
-}
-
-.photo-box {
-    flex: 1;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #1f1f1f;
-    border: 2px solid var(--border);
-}
-
-.photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-}
-
-/* Text felicitare */
-#card-text {
-    margin-top: 30px;
-    font-size: 1.2rem;
-    color: var(--accent);
-    text-align: center;
-    font-family: 'Georgia', serif;
-    font-style: italic;
-    line-height: 1.4;
-}
-
-
-
-.pulse-heart {
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-}
-
-
-/* Buton print */
-.btn-print {
-    margin-top: 30px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 14px 35px;
-    border-radius: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.1rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-    transition: 0.2s ease;
-}
-
-.btn-print:hover {
-    transform: scale(1.07);
-    background: #3a7ac0;
-}
-
-        
-
-/* Print */
-@media print {
-    .config-panel, .btn-print, h1 { display: none; }
-    body { background: white; padding: 0; }
-    #printable-card { box-shadow: none; border: 2px solid var(--accent); }
-}
-
-
+        @media print {
+            .config-panel, .btn-group, #site-header { display: none !important; }
+        }
     </style>
-    </head>
+</head>
 <body>
 
-	<div id="site-header">				 
-		<h1>💌 Greeting Card Creator – an ArtMera project</h1>
-
-		<p lass="promo-text">We create custom wood-engraved portraits, CNC sculptures, and personalized gifts.</p>
-		<a href="https://artmera.wordpress.com/" class="promo-link">Visit ArtMera for more creations</a>
-	</div>		
+    <div id="site-header">
+        <h1>💌 Greeting Card Creator</h1>
+        <p class="promo-text">An ArtMera project – Custom wood-engraved portraits & gifts.</p>
+        <a href="https://artmera.wordpress.com/" target="_blank" class="promo-link">Visit ArtMera Official Site</a>
+    </div>
 
     <div class="config-panel">
         <div class="input-group">
-            <label>His Photo:</label>
-            <input type="file" id="upload-him" accept="image/*">
-        </div>
-        <div class="input-group">
-            <label>His Name:</label>
-            <input type="text" id="name-him" placeholder="Enter his name....">
-        </div>
-        <div class="input-group">
-            <label>Her Photo:</label>
-            <input type="file" id="upload-her" accept="image/*">
-        </div>
-        <div class="input-group">
-            <label>Her Name:</label>
-            <input type="text" id="name-her" placeholder="Enter her name..">
+            <label>Photos:</label>
+            <input type="file" onchange="preview(this, 'img-him')" style="margin-bottom: 10px;">
+            <input type="file" onchange="preview(this, 'img-her')">
         </div>
 
         <div class="input-group">
-            <label>Choose a romantic message: ❤️</label>
-		  <div class="select-wrapper">
-                <span class="select-icon">❤️</span>											   
-		 <select id="auto-messages" onchange="setAutoMessage()">
-            <select id="text-select">
+            <label>Names:</label>
+            <input type="text" id="name-him" placeholder="His Name" onkeyup="updateNames()" style="margin-bottom: 10px;">
+            <input type="text" id="name-her" placeholder="Her Name" onkeyup="updateNames()">
+        </div>
+
+        <div class="input-group">
+            <label>Message:</label>
+            <select id="auto-messages" onchange="setAutoMessage()">
                 <option value="">— Select a message —</option>
                 <option value="I love you more than words can say.">I love you more than words can say.</option>
                 <option value="With you, every day becomes special.">With you, every day becomes special.</option>
-                <option value="You are the reason I smile every morning.">You are the reason I smile every morning.</option>
-                <option value="My heart chose you and it's never wrong.">My heart chose you and it's never wrong.</option>
-                <option value="With you, love has meaning and direction.">With you, love has meaning and direction.</option>
                 <option value="You are my favorite person in the entire universe.">You are my favorite person in the entire universe.</option>
-                <option value="Thank you for existing and for being mine.">Thank you for existing and for being mine.</option>
-                <option value="I feel at home with you, wherever we are.">I feel at home with you, wherever we are.</option>
-                <option value="Your love makes my soul better.">Your love makes my soul better.</option>
-                <option value="You are the beginning and the end of every wish in my heart.">You are the beginning and the end of every wish in my heart.</option>
             </select>
+            <input type="text" id="text-input" placeholder="Or type here..." onkeyup="updateText()" style="margin-top: 10px;">
         </div>
-		  <!-- Inputul tău original -->
-            <input type="text" id="text-input" placeholder="Or write your own custom message..." onkeyup="updateText()">
-        </div> 
 
         <div class="input-group">
-            <label>Choose card theme:</label>
-            <select id="theme-select">
+            <label>Design:</label>
+            <select onchange="changeTheme(this.value)" style="margin-bottom: 10px;">
                 <option value="dark">Dark Modern</option>
                 <option value="romantic">Romantic ❤️</option>
                 <option value="cute">Cute 🌸</option>
                 <option value="elegant">Elegant ✨</option>
             </select>
-        </div>
-
-        <div class="input-group">
-            <label>Card Font:</label>
-            <select id="font-select">
+            <select onchange="changeFont(this.value)">
+                <option value="'Poppins', sans-serif">Modern</option>
                 <option value="'Dancing Script', cursive">Dancing Script</option>
                 <option value="'Great Vibes', cursive">Great Vibes</option>
-                <option value="'Parisienne', cursive">Parisienne</option>
-                <option value="'Parisienne', cursive">Parisienne</option>
             </select>
         </div>
     </div>
 
     <div id="printable-card">
-        <div id="card-header">Our Journey Together...</div>
-        <div id="display-names">His Name & Her Name</div>
-        
+        <div id="display-names" style="font-weight: bold; font-size: 1.4rem; margin-bottom: 10px;">His Name ❤️ Her Name</div>
         <div class="photo-container">
             <div class="photo-box"><img id="img-him"></div>
             <div class="photo-box"><img id="img-her"></div>
         </div>
-
-        <div id="card-text">Your romantic message will appear here...</div>
-        <div class="pulse-heart">❤️</div>
+        <div id="card-text">Your message here...</div>
     </div>
 
-    <button class="btn-save" id="save-png">Save as Image (PNG)</button>
-    <button class="btn-print" onclick="window.print()">Save Card (PDF/Print)</button>
-	
-	 <script>
-        function preview(input, targetId) {
+    <div class="btn-group">
+        <button type="button" class="btn-action btn-save" onclick="saveAsImage()">Save PNG</button>
+        <button type="button" class="btn-action btn-print" onclick="window.print()">Print Card</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        function preview(input, id) {
             const file = input.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById(targetId);
+                reader.onload = (e) => {
+                    const img = document.getElementById(id);
                     img.src = e.target.result;
                     img.style.display = 'block';
-                }
+                };
                 reader.readAsDataURL(file);
             }
         }
 
+        function updateNames() {
+            const h = document.getElementById("name-him").value || "He";
+            const w = document.getElementById("name-her").value || "She";
+            document.getElementById("display-names").innerText = h + " ❤️ " + w;
+        }
+
         function updateText() {
-            const val = document.getElementById('text-input').value;
-            document.getElementById('card-text').innerText = val || "Your romantic message will appear here...";
+            const t = document.getElementById("text-input").value;
+            document.getElementById("card-text").innerText = t || "Your message here...";
         }
-    </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <!-- Adaugă funcția JS care face captura -->
-    <script>
-           function saveAsImage() {
-                        if (!checkPhotos()) return;
-                    
-                        const card = document.getElementById("printable-card");
-                    
-                        html2canvas(card, {
-                            scale: 2,
-                            useCORS: true
-                        }).then(canvas => {
-                            const link = document.createElement("a");
-                            link.download = "romantic-card..png";
-                            link.href = canvas.toDataURL("image/png");
-                            link.click();
-                        });
-                    }
-
-    </script>
-
-    <script>
-        function checkPhotos() {
-            const him = document.getElementById("img-him").src;
-            const her = document.getElementById("img-her").src;
-        
-            if (!him || him.length < 10) {
-                alert("⚠️ Please upload HIS photo before continuing.");
-                return false;
-            }
-        
-            if (!her || her.length < 10) {
-                alert("⚠️ Please upload HER photo before continuing.");
-                return false;
-            }
-        
-            return true;
-        }
-    </script>
-
-    <script>
-      function setAutoMessage() {
-            const msg = document.getElementById("auto-messages").value;
-            const input = document.getElementById("text-input");
-        
-            if (msg) {
-                input.value = msg;
-                updateText(); // actualizează textul de pe felicitare
+        function setAutoMessage() {
+            const m = document.getElementById("auto-messages").value;
+            if (m) {
+                document.getElementById("text-input").value = m;
+                updateText();
             }
         }
-    </script>
 
-    <script>
-            function updateNames() {
-            const him = document.getElementById("name-him").value || "Numele lui";
-            const her = document.getElementById("name-her").value || "Numele ei";
-        
-            document.getElementById("names-line").innerText = him + " ❤️ " + her;
-        }
-    </script>
-
-    <script>
-          function changeTheme() {
-            const theme = document.getElementById("theme-select").value;
-            const card = document.getElementById("printable-card");
-        
-            card.className = ""; // șterge tema anterioară
-            card.classList.add("theme-" + theme);
+        function changeTheme(v) {
+            const c = document.getElementById("printable-card");
+            c.className = (v === "dark") ? "" : "theme-" + v;
         }
 
-    </script>
+        function changeFont(v) {
+            document.getElementById("printable-card").style.fontFamily = v;
+        }
 
-    <script>
-          function changeFont() {
-                const font = document.getElementById("font-select").value;
-                const card = document.getElementById("printable-card");
+        function saveAsImage() {
+            const h = document.getElementById("img-him").src;
+            const w = document.getElementById("img-her").src;
             
-                card.style.fontFamily = font;
-            
-                if (font.includes("Dancing") || font.includes("Great") || font.includes("Parisienne")) {
-                    card.style.fontSize = "1.3rem";
-                    text.style.lineHeight = "1.4";
-                } else {
-                    card.style.fontSize = "1.1rem";
-                    text.style.lineHeight = "1.35";
-                }
+            if (!h || !w) {
+                alert("⚠️ Please upload both photos first!");
+                return;
             }
 
+            html2canvas(document.getElementById("printable-card"), { scale: 2 }).then(canvas => {
+                const link = document.createElement("a");
+                link.download = "card.png";
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
     </script>
-
 </body>
 </html>
