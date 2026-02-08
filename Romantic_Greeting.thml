@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <title>Our Romantic Greeting Card ❤️</title>
     <style>
         :root {
@@ -29,30 +29,38 @@
         #site-header {
             text-align: center;
             margin-bottom: 25px;
+            padding: 10px 0;
         }
 
         #site-header h1 {
             font-size: 1.9rem;
+            font-weight: 700;
             color: var(--accent);
             margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .promo-text {
             font-size: 1rem;
+            color: var(--text-light);
             opacity: 0.85;
             margin-bottom: 6px;
         }
 
         .promo-link {
+            display: inline-block;
+            margin-top: 4px;
             color: var(--accent);
             font-weight: 600;
             text-decoration: none;
+            transition: 0.2s ease;
         }
 
         .config-panel {
             background: #222;
             padding: 25px;
             border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
             margin-bottom: 40px;
             max-width: 500px;
             width: 100%;
@@ -70,7 +78,9 @@
             margin-bottom: 6px;
         }
 
-        input[type="text"], input[type="file"], select {
+        input[type="text"], 
+        input[type="file"], 
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border);
@@ -82,40 +92,52 @@
 
         #printable-card {
             width: 380px;
-            min-height: 450px;
+            min-height: 420px;
+            height: auto;
             background: #111;
             border-radius: 18px;
             padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
             border: 4px solid var(--accent);
+            position: relative;
             transition: 0.3s ease;
         }
 
         #printable-card.theme-romantic {
-            background: #ffe6ea;
-            color: #7a1f2a;
-            border-color: #ff4d6d;
+            --card-bg: #ffe6ea;
+            --card-text: #7a1f2a;
+            --card-accent: #ff4d6d;
+            background: var(--card-bg);
+            color: var(--card-text);
+            border-color: var(--card-accent);
         }
 
         #printable-card.theme-cute {
-            background: #fff4fb;
-            color: #ff69b4;
-            border-color: #ff9ad5;
+            --card-bg: #fff4fb;
+            --card-text: #ff69b4;
+            --card-accent: #ff9ad5;
+            background: var(--card-bg);
+            color: var(--card-text);
+            border-color: var(--card-accent);
         }
 
         #printable-card.theme-elegant {
-            background: #f7f3e9;
-            color: #5a4634;
-            border-color: #c6a667;
+            --card-bg: #f7f3e9;
+            --card-text: #5a4634;
+            --card-accent: #c6a667;
+            background: var(--card-bg);
+            color: var(--card-text);
+            border-color: var(--card-accent);
         }
 
         .photo-container {
             display: flex;
             gap: 15px;
             width: 100%;
-            height: 200px;
+            height: 220px;
             margin-top: 20px;
         }
 
@@ -123,8 +145,8 @@
             flex: 1;
             border-radius: 12px;
             overflow: hidden;
-            background: #2a2a2a;
-            border: 1px solid var(--border);
+            background: #1f1f1f;
+            border: 2px solid var(--border);
         }
 
         .photo-box img {
@@ -135,24 +157,26 @@
         }
 
         #card-text {
-            margin-top: 25px;
+            margin-top: 30px;
+            font-size: 1.2rem;
             text-align: center;
             font-style: italic;
-            font-size: 1.2rem;
+            line-height: 1.4;
         }
 
         .btn-group {
             margin-top: 30px;
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
-        button {
-            padding: 12px 25px;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
+        .btn-action {
+            padding: 14px 25px;
+            border-radius: 40px;
             font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
         }
 
         .btn-save { background: #28a745; color: white; }
@@ -167,76 +191,72 @@
 
     <div id="site-header">
         <h1>💌 Greeting Card Creator</h1>
-        <p class="promo-text">An ArtMera project - Personalized Gifts & Engravings</p>
-        <a href="https://artmera.wordpress.com/" target="_blank" class="promo-link">Visit ArtMera Official Page</a>
+        <p class="promo-text">An ArtMera project – Custom wood-engraved portraits & gifts.</p>
+        <a href="https://artmera.wordpress.com/" target="_blank" class="promo-link">Visit ArtMera Official Site</a>
     </div>
 
     <div class="config-panel">
         <div class="input-group">
-            <label>His Photo:</label>
-            <input type="file" onchange="preview(this, 'img-him')">
-        </div>
-        <div class="input-group">
-            <label>His Name:</label>
-            <input type="text" id="name-him" placeholder="Enter his name..." onkeyup="updateNames()">
-        </div>
-        <div class="input-group">
-            <label>Her Photo:</label>
+            <label>Photos:</label>
+            <input type="file" onchange="preview(this, 'img-him')" style="margin-bottom: 10px;">
             <input type="file" onchange="preview(this, 'img-her')">
         </div>
+
         <div class="input-group">
-            <label>Her Name:</label>
-            <input type="text" id="name-her" placeholder="Enter her name..." onkeyup="updateNames()">
+            <label>Names:</label>
+            <input type="text" id="name-him" placeholder="His Name" onkeyup="updateNames()" style="margin-bottom: 10px;">
+            <input type="text" id="name-her" placeholder="Her Name" onkeyup="updateNames()">
         </div>
+
         <div class="input-group">
-            <label>Romantic Message:</label>
+            <label>Message:</label>
             <select id="auto-messages" onchange="setAutoMessage()">
                 <option value="">— Select a message —</option>
                 <option value="I love you more than words can say.">I love you more than words can say.</option>
                 <option value="With you, every day becomes special.">With you, every day becomes special.</option>
                 <option value="You are my favorite person in the entire universe.">You are my favorite person in the entire universe.</option>
             </select>
-            <input type="text" id="text-input" placeholder="Or write your own..." onkeyup="updateText()" style="margin-top:10px">
+            <input type="text" id="text-input" placeholder="Or type here..." onkeyup="updateText()" style="margin-top: 10px;">
         </div>
+
         <div class="input-group">
-            <label>Theme & Font:</label>
-            <select id="theme-select" onchange="changeTheme()" style="margin-bottom:10px">
+            <label>Design:</label>
+            <select onchange="changeTheme(this.value)" style="margin-bottom: 10px;">
                 <option value="dark">Dark Modern</option>
                 <option value="romantic">Romantic ❤️</option>
                 <option value="cute">Cute 🌸</option>
                 <option value="elegant">Elegant ✨</option>
             </select>
-            <select id="font-select" onchange="changeFont()">
+            <select onchange="changeFont(this.value)">
                 <option value="'Poppins', sans-serif">Modern</option>
                 <option value="'Dancing Script', cursive">Dancing Script</option>
                 <option value="'Great Vibes', cursive">Great Vibes</option>
-                <option value="'Parisienne', cursive">Parisienne</option>
             </select>
         </div>
     </div>
 
     <div id="printable-card">
-        <div id="display-names" style="font-weight: bold; font-size: 1.3rem;">He ❤️ She</div>
+        <div id="display-names" style="font-weight: bold; font-size: 1.4rem; margin-bottom: 10px;">His Name ❤️ Her Name</div>
         <div class="photo-container">
             <div class="photo-box"><img id="img-him"></div>
             <div class="photo-box"><img id="img-her"></div>
         </div>
-        <div id="card-text">Your romantic message will appear here...</div>
+        <div id="card-text">Your message here...</div>
     </div>
 
     <div class="btn-group">
-        <button class="btn-save" onclick="saveAsImage()">Save as PNG</button>
-        <button class="btn-print" onclick="window.print()">Print / PDF</button>
+        <button type="button" class="btn-action btn-save" onclick="saveAsImage()">Save PNG</button>
+        <button type="button" class="btn-action btn-print" onclick="window.print()">Print Card</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
-        function preview(input, targetId) {
+        function preview(input, id) {
             const file = input.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const img = document.getElementById(targetId);
+                    const img = document.getElementById(id);
                     img.src = e.target.result;
                     img.style.display = 'block';
                 };
@@ -245,48 +265,45 @@
         }
 
         function updateNames() {
-            const him = document.getElementById("name-him").value || "He";
-            const her = document.getElementById("name-her").value || "She";
-            document.getElementById("display-names").innerText = him + " ❤️ " + her;
+            const h = document.getElementById("name-him").value || "He";
+            const w = document.getElementById("name-her").value || "She";
+            document.getElementById("display-names").innerText = h + " ❤️ " + w;
         }
 
         function updateText() {
-            const val = document.getElementById('text-input').value;
-            document.getElementById('card-text').innerText = val || "Your romantic message will appear here...";
+            const t = document.getElementById("text-input").value;
+            document.getElementById("card-text").innerText = t || "Your message here...";
         }
 
         function setAutoMessage() {
-            const msg = document.getElementById("auto-messages").value;
-            if (msg) {
-                document.getElementById("text-input").value = msg;
+            const m = document.getElementById("auto-messages").value;
+            if (m) {
+                document.getElementById("text-input").value = m;
                 updateText();
             }
         }
 
-        function changeTheme() {
-            const theme = document.getElementById("theme-select").value;
-            const card = document.getElementById("printable-card");
-            card.className = (theme === "dark") ? "" : "theme-" + theme;
+        function changeTheme(v) {
+            const c = document.getElementById("printable-card");
+            c.className = (v === "dark") ? "" : "theme-" + v;
         }
 
-        function changeFont() {
-            const font = document.getElementById("font-select").value;
-            document.getElementById("printable-card").style.fontFamily = font;
+        function changeFont(v) {
+            document.getElementById("printable-card").style.fontFamily = v;
         }
 
         function saveAsImage() {
-            const imgHim = document.getElementById("img-him").src;
-            const imgHer = document.getElementById("img-her").src;
-
-            if (!imgHim || !imgHer) {
-                alert("⚠️ Please upload both photos before saving!");
+            const h = document.getElementById("img-him").src;
+            const w = document.getElementById("img-her").src;
+            
+            if (!h || !w) {
+                alert("⚠️ Please upload both photos first!");
                 return;
             }
 
-            const card = document.getElementById("printable-card");
-            html2canvas(card, { scale: 2 }).then(canvas => {
+            html2canvas(document.getElementById("printable-card"), { scale: 2 }).then(canvas => {
                 const link = document.createElement("a");
-                link.download = "romantic-card.png";
+                link.download = "card.png";
                 link.href = canvas.toDataURL();
                 link.click();
             });
